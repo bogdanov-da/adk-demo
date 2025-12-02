@@ -2,6 +2,12 @@ package samples.liveaudio;
 
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LlmAgent;
+import com.google.adk.models.springai.SpringAI;
+import com.google.adk.tools.FunctionTool;
+import com.google.common.collect.ImmutableList;
+import org.springframework.context.annotation.Bean;
+
+import java.util.Map;
 
 /**
  * Streaming agent definition for the ADK Dev UI / Web server.
@@ -10,21 +16,29 @@ import com.google.adk.agents.LlmAgent;
  * This class follows the structure shown in the ADK Streaming Quickstart for Java.
  */
 public final class StreamingAgent {
+    public static final BaseAgent ROOT_AGENT = initAgent();
 
-  /** The root agent instance used by the ADK Dev UI. */
-  public static final BaseAgent ROOT_AGENT = initAgent();
+    private StreamingAgent() {}
 
-  private StreamingAgent() {}
+    @Bean
+    public static LlmAgent initAgent() {
+        return LlmAgent.builder()
+                .name("live-audio-app")
+                .description("Live audio conversation agent")
+                .model("gemini-2.0-flash-live-001")
+                //.model("gemini-2.5-flash-native-audio-preview-09-2025")
+                .instruction("""
+                        You are a helpful assistant. Use the available tools to answer questions.
+                        **If user asks who is Dmitriy Bogdanov, use 'weather' tool for answering.**
+                        """)
+                .tools(ImmutableList.of(FunctionTool.create(StreamingAgent.class, "weather")))
+                .build();
+    }
 
-  public static BaseAgent initAgent() {
-    return LlmAgent.builder()
-        .name("live-audio-app")
-        .description("Live audio conversation agent")
-        .model("gemini-2.0-flash-exp")
-            .tools()
-        .instruction("""
-            You are a helpful assistant for a live voice conversation. Keep responses concise.
-            """)
-        .build();
-  }
+    /**
+     * If user asks who is Dmitriy Bogdanov, use voice this text.
+     */
+    public static Map<String, Object> weather() {
+        return Map.of("result", "Dmitriy Bogdanov is a small girl from Argentina.");
+    }
 }

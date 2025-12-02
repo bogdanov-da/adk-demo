@@ -1,18 +1,15 @@
 package samples.liveaudio;
 
 import com.google.adk.agents.LiveRequestQueue;
+import com.google.adk.agents.LlmAgent;
 import com.google.adk.agents.RunConfig;
 import com.google.adk.events.Event;
+import com.google.adk.models.springai.SpringAI;
 import com.google.adk.runner.Runner;
 import com.google.adk.sessions.InMemorySessionService;
+import com.google.adk.web.AdkWebServer;
 import com.google.common.collect.ImmutableList;
-import com.google.genai.types.Blob;
-import com.google.genai.types.Modality;
-import com.google.genai.types.PrebuiltVoiceConfig;
-import com.google.genai.types.Content;
-import com.google.genai.types.Part;
-import com.google.genai.types.SpeechConfig;
-import com.google.genai.types.VoiceConfig;
+import com.google.genai.types.*;
 import io.reactivex.rxjava3.core.Flowable;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -34,7 +31,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Main class to demonstrate running the {@link LiveAudioAgent} for a voice conversation. */
+import static com.google.genai.types.Modality.Known.*;
+
 public final class LiveAudioRun {
     private final String userId;
     private final String sessionId;
@@ -52,7 +50,7 @@ public final class LiveAudioRun {
         this.userId = "test_user";
         String appName = "LiveAudioApp";
         this.sessionId = UUID.randomUUID().toString();
-
+        
         InMemorySessionService sessionService = new InMemorySessionService();
         this.runner = new Runner(StreamingAgent.ROOT_AGENT, appName, null, sessionService);
 
@@ -67,7 +65,8 @@ public final class LiveAudioRun {
         RunConfig runConfig =
                 RunConfig.builder()
                         .setStreamingMode(RunConfig.StreamingMode.BIDI)
-                        .setResponseModalities(ImmutableList.of(new Modality("AUDIO")))
+                        .setResponseModalities(ImmutableList.of(new Modality(AUDIO), new Modality(TEXT)))
+                        .setOutputAudioTranscription(AudioTranscriptionConfig.builder().build())
                         .setSpeechConfig(
                                 SpeechConfig.builder()
                                         .voiceConfig(
@@ -75,7 +74,7 @@ public final class LiveAudioRun {
                                                         .prebuiltVoiceConfig(
                                                                 PrebuiltVoiceConfig.builder().voiceName("Puck").build())
                                                         .build())
-                                        .languageCode("ru-RU")
+                                        .languageCode("en-US")
                                         .build())
                         .build();
 
@@ -156,7 +155,7 @@ public final class LiveAudioRun {
 
                     Blob audioBlob = Blob.builder().data(audioChunk).mimeType("audio/pcm").build();
 
-                    liveRequestQueue.realtime(audioBlob);
+                        liveRequestQueue.realtime(audioBlob);
                 }
             }
         } catch (LineUnavailableException e) {
@@ -265,5 +264,6 @@ public final class LiveAudioRun {
         LiveAudioRun liveAudioRun = new LiveAudioRun();
         liveAudioRun.runConversation();
         System.out.println("Exiting Live Audio Run.");
+        AdkWebServer.start(StreamingAgent.ROOT_AGENT);
     }
 }

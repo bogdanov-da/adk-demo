@@ -1,0 +1,9 @@
+spring:
+  ai:
+    mcp:
+      server:
+        type:
+          SYNC
+        protocol: SSE
+        annotation-scanner:
+          enabled: true
