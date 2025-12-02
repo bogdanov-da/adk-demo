@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: mcp-server
+  ai:
+    mcp:
+      server:
+        type: SYNC
+        protocol: SSE
+        annotation-scanner:
+          enabled: true
+
+server:
+  port: 8081

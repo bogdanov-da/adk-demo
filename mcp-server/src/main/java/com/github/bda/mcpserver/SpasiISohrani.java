@@ -1,10 +1,7 @@
-package com.github.bda;
+package com.github.bda.mcpserver;
 
-import org.springaicommunity.mcp.annotation.McpTool;
 import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class SpasiISohrani {

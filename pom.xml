@@ -4,15 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.google.adk.samples</groupId>
-    <artifactId>google-adk-sample-live-audio</artifactId>
+    <groupId>com.github.bda</groupId>
+    <artifactId>adk-demo</artifactId>
     <version>0.1.0</version>
-    <name>Google ADK - Sample - Live Audio</name>
-    <description>
-        A sample application demonstrating a live audio conversation using ADK,
-        runnable via samples.liveaudio.LiveAudioRun.
-    </description>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
+
+    <name>ADK Demo - Parent</name>
+
+    <modules>
+        <module>mcp-server</module>
+        <module>adk-agents</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -24,7 +26,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <auto-value.version>1.11.0</auto-value.version>
         <spring-ai.version>1.1.0-M3</spring-ai.version>
         <google-adk.version>0.4.0</google-adk.version>
     </properties>
@@ -38,68 +39,27 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>com.google.adk</groupId>
+                <artifactId>google-adk</artifactId>
+                <version>${google-adk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.adk</groupId>
+                <artifactId>google-adk-dev</artifactId>
+                <version>${google-adk.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.google.adk</groupId>
-            <artifactId>google-adk</artifactId>
-            <version>${google-adk.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.adk</groupId>
-            <artifactId>google-adk-dev</artifactId>
-            <version>${google-adk.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.adk</groupId>
-            <artifactId>google-adk-spring-ai</artifactId>
-            <version>${google-adk.version}</version>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter</artifactId>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.ai</groupId>
-            <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.ai</groupId>-->
-<!--            <artifactId>spring-ai-google-genai</artifactId>-->
-<!--        </dependency>-->
-        <!-- Tests -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>adk-server</id>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>samples.liveaudio.LiveAudioRun</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

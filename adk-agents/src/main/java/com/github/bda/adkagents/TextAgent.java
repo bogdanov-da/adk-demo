@@ -1,4 +1,4 @@
-package samples.liveaudio;
+package com.github.bda.adkagents;
 
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LlmAgent;

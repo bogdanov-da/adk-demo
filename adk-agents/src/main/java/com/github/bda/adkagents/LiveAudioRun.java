@@ -1,25 +1,18 @@
-package samples.liveaudio;
+package com.github.bda.adkagents;
 
 import com.google.adk.agents.LiveRequestQueue;
-import com.google.adk.agents.LlmAgent;
 import com.google.adk.agents.RunConfig;
 import com.google.adk.events.Event;
-import com.google.adk.models.springai.SpringAI;
 import com.google.adk.runner.Runner;
 import com.google.adk.sessions.InMemorySessionService;
 import com.google.adk.web.AdkWebServer;
 import com.google.common.collect.ImmutableList;
 import com.google.genai.types.*;
 import io.reactivex.rxjava3.core.Flowable;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 import java.util.UUID;
@@ -264,6 +257,5 @@ public final class LiveAudioRun {
         LiveAudioRun liveAudioRun = new LiveAudioRun();
         liveAudioRun.runConversation();
         System.out.println("Exiting Live Audio Run.");
-        AdkWebServer.start(StreamingAgent.ROOT_AGENT);
     }
 }
