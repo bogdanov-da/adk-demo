@@ -12,6 +12,7 @@
     <name>ADK Demo - Parent</name>
 
     <modules>
+        <module>tools</module>
         <module>mcp-server</module>
         <module>adk-agents</module>
     </modules>

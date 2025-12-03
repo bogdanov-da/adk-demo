@@ -8,7 +8,7 @@ public class App {
     public static void main( String[] args)
     {
         BaseAgent audioAgent = StreamingAgent.ROOT_AGENT;
-        BaseAgent textAgent = TextAgent.ROOT_AGENT;
-        AdkWebServer.start(textAgent, audioAgent);
+        BaseAgent companyAgent = new CompanyAgent().initAgent();
+        AdkWebServer.start(companyAgent, audioAgent);
     }
 }

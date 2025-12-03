@@ -1,12 +1,11 @@
 package com.github.bda.adkagents;
 
+import com.github.bda.tools.SpasiISohrani;
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LlmAgent;
 import com.google.adk.tools.FunctionTool;
 import com.google.common.collect.ImmutableList;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Map;
 
 /**
  * Streaming agent definition for the ADK Dev UI / Web server.
@@ -24,20 +23,12 @@ public final class StreamingAgent {
         return LlmAgent.builder()
                 .name("live-audio-app")
                 .description("Live audio conversation agent")
-                .model("gemini-2.0-flash-live-001")
-                //.model("gemini-2.5-flash-native-audio-preview-09-2025")
+                //.model("gemini-2.0-flash-live-001")
+                .model("gemini-2.5-flash-native-audio-preview-09-2025")
                 .instruction("""
                         You are a helpful assistant. Use the available tools to answer questions.
-                        **If user asks who is Dmitriy Bogdanov, use 'weather' tool for answering.**
                         """)
-                .tools(ImmutableList.of(FunctionTool.create(StreamingAgent.class, "weather")))
+                .tools(ImmutableList.of(FunctionTool.create(SpasiISohrani.class, "whoIsDmitriy")))
                 .build();
-    }
-
-    /**
-     * If user asks who is Dmitriy Bogdanov, use voice this text.
-     */
-    public static Map<String, Object> weather() {
-        return Map.of("result", "Dmitriy Bogdanov is a small girl from Argentina.");
     }
 }

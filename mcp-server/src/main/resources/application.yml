@@ -4,10 +4,12 @@ spring:
   ai:
     mcp:
       server:
+        stdio: false
         type: SYNC
         protocol: SSE
         annotation-scanner:
           enabled: true
+      #  keep-alive-interval: 30s
 
 server:
   port: 8081
