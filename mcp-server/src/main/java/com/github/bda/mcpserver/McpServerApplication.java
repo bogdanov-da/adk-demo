@@ -1,6 +1,7 @@
 package com.github.bda.mcpserver;
 
 import com.github.bda.tools.SpasiISohrani;
+import com.github.bda.tools.WialonMcpTools;
 import org.springframework.ai.support.ToolCallbacks;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.util.List;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.github.bda.mcpserver", "com.github.bda.tools"})
+@ComponentScan(basePackages = {"com.github.bda"})
 public class McpServerApplication {
 
     public static void main(String[] args) {
@@ -19,8 +20,8 @@ public class McpServerApplication {
     }
 
     @Bean
-    public List<ToolCallback> myMcpTools(SpasiISohrani spasiISohrani) {
-        return List.of(ToolCallbacks.from(spasiISohrani));
+    public List<ToolCallback> myMcpTools(SpasiISohrani spasiISohrani, WialonMcpTools wialonMcpTools) {
+        return List.of(ToolCallbacks.from(wialonMcpTools, spasiISohrani));
     }
 
 }

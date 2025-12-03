@@ -9,6 +9,7 @@ public class App {
     {
         BaseAgent audioAgent = StreamingAgent.ROOT_AGENT;
         BaseAgent companyAgent = new CompanyAgent().initAgent();
-        AdkWebServer.start(companyAgent, audioAgent);
+        BaseAgent apiAgent = new ApiAgent().initAgent();
+        AdkWebServer.start(apiAgent, companyAgent, audioAgent);
     }
 }

@@ -3,7 +3,6 @@ package com.github.bda.adkagents;
 import com.google.adk.agents.LlmAgent;
 import com.google.adk.agents.ParallelAgent;
 import com.google.adk.agents.SequentialAgent;
-import com.google.adk.tools.AgentTool;
 import com.google.adk.tools.GoogleSearchTool;
 import org.springframework.context.annotation.Bean;
 
